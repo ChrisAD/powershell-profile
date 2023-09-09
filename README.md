@@ -8,7 +8,16 @@ Save `Profile.ps1` in `Documents/WindowsPowershell/`.
 Save `Profile.ps1` to `Documents/Powershell/Microsoft.PowerShell_profile.ps1`
 
 ## Don't have Powershell 7? 
-Powershell has a lot of quality of life upgrades. I recommend installing it and setting it as the default with Windows Terminal (https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701). You can install Powershell 7 with the built-in Windows packet manager `winget` like this: `winget install --id Microsoft.Powershell --source winget`
+Powershell has a lot of quality of life upgrades. I recommend installing it and setting it as the default with Windows Terminal (https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701). You can install Powershell 7 with the built-in Windows packet manager `winget` like this: `winget install --id Microsoft.Powershell --source winget`. 
+
+### Setting Powershell 7 as default in Windows Terminal 
+Setting it to be the default shell is done by opening up the settings, then opening the settings.json: 
+![image](https://github.com/ChrisAD/powershell-profile/assets/6368326/40d052ca-31ed-4026-aba8-9be4393a0c62)
+
+Change the defaultProfile value to be the GUID of the Powershell 7 profile. Below you can see the GUID of mine which I found further down in the json file. Copy the GUID and add it as the defaultProfile value. 
+![image](https://github.com/ChrisAD/powershell-profile/assets/6368326/1efac4c0-f950-49bc-b108-535f659484b5)
+
+
 
 # What it does 
 What it does is: 
