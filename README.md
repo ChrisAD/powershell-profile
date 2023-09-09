@@ -4,8 +4,11 @@ This PowerShell profile makes the Windows PowerShell a bit better
 # Powershell 5 
 Save `Profile.ps1` in `Documents/WindowsPowershell/`. 
 
-# POwershell 7
+# Powershell 7
 Save `Profile.ps1` to `Documents/Powershell/Microsoft.PowerShell_profile.ps1`
+
+## Don't have Powershell 7? 
+Powershell has a lot of quality of life upgrades. I recommend installing it and setting it as the default with Windows Terminal (https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701). You can install Powershell 7 with the built-in Windows packet manager `winget` like this: `winget install --id Microsoft.Powershell --source winget`
 
 # What it does 
 What it does is: 
