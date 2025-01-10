@@ -26,3 +26,4 @@ What it does is:
 - Creates alias `head` for `select-object`, allowing us to do things like `head -First 10`.
 - Edits the prompt to include the current branch, if the folder is a git repo. 
 - Loads all fabric patterns and makes them available as functions, allowing things like `get-clipboard | <pattern>`, e.g. `iwr example.com | so -ExpandProperty content | summarize` and of course much much more. 
+- Installs aadintenrals if it is not already installed. Can be then used by `import-module aadinternals`
