@@ -102,3 +102,10 @@ function scrape {
     )
     fabric /scrape_url:$scrapeUrl 
 }
+
+# AADInternals
+# Check if AADInternals module is already installed
+if (-not (Get-Module -ListAvailable -Name AADInternals)) {
+    # If not installed, install it
+    Install-Module -Name AADInternals -Force -Scope CurrentUser
+}
