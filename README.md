@@ -25,3 +25,4 @@ What it does is:
 - Creates function `Get-History-Full`, with alias `hist`. This allows you to see all commands you've run previously.
 - Creates alias `head` for `select-object`, allowing us to do things like `head -First 10`.
 - Edits the prompt to include the current branch, if the folder is a git repo. 
+- Loads all fabric patterns and makes them available as functions, allowing things like `get-clipboard | <pattern>`, e.g. `iwr example.com | so -ExpandProperty content | summarize` and of course much much more. 
