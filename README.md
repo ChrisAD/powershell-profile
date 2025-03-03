@@ -27,3 +27,6 @@ What it does is:
 - Edits the prompt to include the current branch, if the folder is a git repo. 
 - Loads all fabric patterns and makes them available as functions, allowing things like `get-clipboard | <pattern>`, e.g. `iwr example.com | so -ExpandProperty content | summarize` and of course much much more. 
 - Installs aadintenrals if it is not already installed. Can be then used by `import-module aadinternals`
+- Takes each Fabric pattern and turns it into a command
+- Allows you to do yt <url> to get youtube transcript
+- Allows for scrape <url> to get markdown (LLM friendly) formatting of a URL
