@@ -84,16 +84,6 @@ function $patternName {
     Invoke-Expression $functionDefinition
 }
 
-# Define the 'yt' function as well
-function yt {
-    [CmdletBinding()]
-    param(
-        [Parameter(Mandatory = $true)]
-        [string]$videoLink
-    )
-    fabric -y $videoLink --transcript
-}
-
 function scrape {
     [CmdletBinding()]
     param(
@@ -103,9 +93,37 @@ function scrape {
     fabric /scrape_url:$scrapeUrl 
 }
 
-# AADInternals
-# Check if AADInternals module is already installed
-if (-not (Get-Module -ListAvailable -Name AADInternals)) {
-    # If not installed, install it
-    Install-Module -Name AADInternals -Force -Scope CurrentUser
+
+# Requires a free API key from youtube-transcript.io. 
+# Usage: yt "apikey" "youtube.com/link" 
+function Get-YTTranscript {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$License,
+        [Parameter(Mandatory = $true)]
+        [string]$Url
+    )
+
+    if ($Url -match "v=([^&]+)") {
+        $id = $matches[1]
+    }
+    elseif ($Url -match "youtu\.be/([^?&]+)") {
+        $id = $matches[1]
+    }
+    else {
+        Write-Error "Invalid YouTube URL"
+        return
+    }
+
+    $body = @{ ids = @($id) } | ConvertTo-Json -Compress
+
+    (Invoke-WebRequest -Method POST "https://www.youtube-transcript.io/api/transcripts" `
+        -Headers @{
+        Authorization  = "Basic $License"
+        "Content-Type" = "application/json"
+    } `
+        -Body $body
+    ).Content.ToString() | jq -r '.[].text'
 }
+
+Set-Alias yt Get-YTTranscript
