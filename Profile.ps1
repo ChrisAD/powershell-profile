@@ -126,4 +126,9 @@ function Get-YTTranscript {
     ).Content.ToString() | jq -r '.[].text'
 }
 
+# Create a venv for the current folder
+function mkvenv {
+    C:\python312\python.exe -m venv .\venv
+}
+
 Set-Alias yt Get-YTTranscript
