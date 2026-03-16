@@ -132,3 +132,45 @@ function mkvenv {
 }
 
 Set-Alias yt Get-YTTranscript
+
+function Remove-ImageBackground {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$APIKey,
+
+        [Parameter(Mandatory=$true)]
+        [string]$PathToFile,
+
+        [Parameter(Mandatory=$true)]
+        [string]$OutputFile
+    )
+
+    if (-not (Test-Path $PathToFile)) {
+        throw "Input file not found: $PathToFile"
+    }
+
+    $headers = @{
+        "X-API-Key" = $APIKey
+    }
+
+    $form = @{
+        image_file = Get-Item $PathToFile
+        size       = "auto"
+    }
+
+    try {
+        Invoke-RestMethod `
+            -Uri "https://api.remove.bg/v1.0/removebg" `
+            -Method Post `
+            -Headers $headers `
+            -Form $form `
+            -OutFile $OutputFile
+
+        Write-Host "Background removed successfully -> $OutputFile"
+    }
+    catch {
+        Write-Error "Failed to process image: $_"
+    }
+}
+
+set-alias rmbg Remove-ImageBackground
