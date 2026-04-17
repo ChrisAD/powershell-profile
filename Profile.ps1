@@ -98,8 +98,9 @@ function scrape {
 # Usage: yt "apikey" "youtube.com/link" 
 function Get-YTTranscript {
     param(
-        [Parameter(Mandatory = $true)]
+        [Parameter(Mandatory = $false)]
         [string]$License,
+        
         [Parameter(Mandatory = $true)]
         [string]$Url
     )
@@ -117,11 +118,16 @@ function Get-YTTranscript {
 
     $body = @{ ids = @($id) } | ConvertTo-Json -Compress
 
-    (Invoke-WebRequest -Method POST "https://www.youtube-transcript.io/api/transcripts" `
-        -Headers @{
-        Authorization  = "Basic $License"
+    $headers = @{
         "Content-Type" = "application/json"
-    } `
+    }
+
+    if ($License) {
+        $headers["Authorization"] = "Basic $License"
+    }
+
+    (Invoke-WebRequest -Method POST "https://www.youtube-transcript.io/api/transcripts" `
+        -Headers $headers `
         -Body $body
     ).Content.ToString() | jq -r '.[].text'
 }
