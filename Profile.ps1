@@ -174,3 +174,13 @@ function Remove-ImageBackground {
 }
 
 set-alias rmbg Remove-ImageBackground
+
+function Set-WindowTitle {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Title
+    )
+
+    $host.UI.RawUI.WindowTitle = $Title
+}
+Set-Alias swt Set-WindowTitle
