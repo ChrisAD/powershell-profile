@@ -95,14 +95,14 @@ function scrape {
 
 
 # Requires a free API key from youtube-transcript.io. 
-# Usage: yt "apikey" "youtube.com/link" 
+# Usage: yt  "youtube.com/link" "apikey"
 function Get-YTTranscript {
     param(
-        [Parameter(Mandatory = $false)]
-        [string]$License,
-        
-        [Parameter(Mandatory = $true)]
-        [string]$Url
+        [Parameter(Position = 0, Mandatory = $true)]
+        [string]$Url,
+
+        [Parameter(Position = 1)]
+        [string]$License = "Optional hardcoded API key"
     )
 
     if ($Url -match "v=([^&]+)") {
@@ -131,6 +131,8 @@ function Get-YTTranscript {
         -Body $body
     ).Content.ToString() | jq -r '.[].text'
 }
+
+Set-Alias yt Get-YTTranscript
 
 # Create a venv for the current folder
 function mkvenv {
