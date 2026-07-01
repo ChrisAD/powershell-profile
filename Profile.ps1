@@ -70,23 +70,20 @@ function Invoke-FabricPattern {
 }
 
 if (Test-Path $patternsPath) {
-    $__fabricTemplate = {
-        param(
-            [Parameter(ValueFromPipeline = $true)] [string] $i,
-            [Parameter(ValueFromRemainingArguments = $true)] [string[]] $a
-        )
-        begin { $c = @() }
-        process { if ($i) { $c += $i } }
-        end {
-            $p = $c -join "`n"
-            if ($p) { $p | Invoke-FabricPattern -Pattern $__patternName -PatternArgs $a }
-            else    { Invoke-FabricPattern -Pattern $__patternName -PatternArgs $a }
-        }
-    }.ToString()
+    $__fabricTemplate = 'param(
+        [Parameter(ValueFromPipeline = $true)] [string] $i,
+        [Parameter(ValueFromRemainingArguments = $true)] [string[]] $a
+    )
+    begin { $c = @() }
+    process { if ($i) { $c += $i } }
+    end {
+        $p = $c -join "`n"
+        $__patternName = $MyInvocation.MyCommand.Name
+        if ($p) { $p | Invoke-FabricPattern -Pattern $__patternName -PatternArgs $a }
+        else    { Invoke-FabricPattern -Pattern $__patternName -PatternArgs $a }
+    }'
     foreach ($patternDir in Get-ChildItem -Path $patternsPath -Directory) {
-        $name = $patternDir.Name
-        $body = "`$__patternName = '$name'; " + $__fabricTemplate
-        Set-Item -Path "function:$name" -Value $body
+        Set-Item -Path "function:$($patternDir.Name)" -Value $__fabricTemplate
     }
 }
 
